@@ -116,29 +116,40 @@ body {
     to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
-.product-container {
+/* استخدم النسب المئوية للأحجام الكبيرة */
+.container, .product-grid {
+    width: 100%;
+    max-width: 1200px; /* للكمبيوتر */
+    margin: 0 auto;
+    padding: 10px;
     display: flex;
-    flex-wrap: wrap; /* لو الشاشة ضاقت، المنتجات تنزل تحت بعض */
-    justify-content: center; /* سنتر كل حاجة في النص */
-    gap: 20px; /* مسافة ثابتة بين الكروت */
+    flex-wrap: wrap; /* أهم خاصية للموبايل عشان العناصر تنزل تحت بعض */
+    justify-content: center;
 }
 
+/* الكارت نفسه خليه مرن */
 .product-card {
-    width: 90%; /* على الموبايل ياخد مساحة كبيرة */
-    max-width: 300px; /* بس على الكمبيوتر ميزيدش عن 300 بيكسل */
+    width: 90%; /* ياخد الشاشة كلها في الموبايل الصغير */
+    max-width: 280px; /* ميزيدش عن كدة في الشاشات الكبيرة */
 }
 
-/* للأجهزة اللي شاشتها أصغر من 600 بيكسل (الموبايلات) */
-@media screen and (max-width: 600px) {
-    body {
-        font-size: 14px; /* تصغير الخط عشان يناسب الموبايل */
-    }
-    
-    .hero-section h1 {
-        font-size: 24px; /* تصغير العنوان الرئيسي */
-    }
 
-    .nav-bar {
-        flex-direction: column; /* يخلي اللوجو والزراير فوق بعض في الموبايل */
-    }
+/* ضبط عام لكل العناصر عشان م تخرجش بره الشاشة */
+* {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* ضبط الصور عشان تصغر مع الموبايل */
+img {
+    height: auto;
+    display: block;
+}
+
+/* أهم كود للموبايل: يخلي العناصر تنزل تحت بعض بدل ما تختفي */
+.navbar, .button-group, .content-wrapper {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 10px;
 }
