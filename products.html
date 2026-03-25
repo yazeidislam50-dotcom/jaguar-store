@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGUAR STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript"> (function() { emailjs.init("qVaa7GJPktggiEfmM"); })(); </script>
+
+    <style>
+        :root { --gold: #FFB800; --bg: #050505; --card: #111; --text: #fff; --gray: #888; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); margin: 0; direction: rtl; overflow-x: hidden; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: #000; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 900; } .logo span { color: var(--gold); }
+        .search-box input { width: 350px; padding: 12px 20px; border-radius: 25px; border: 1px solid #333; background: #111; color: #fff; outline: none; font-family: 'Cairo'; }
+        .cart-icon { background: var(--gold); color: #000; padding: 10px 25px; border-radius: 12px; cursor: pointer; font-weight: 900; }
+
+        .main-wrapper { display: flex; padding: 30px 5%; gap: 30px; min-height: 80vh; }
+        aside { width: 280px; background: var(--card); padding: 25px; border-radius: 20px; height: fit-content; border: 1px solid #222; position: sticky; top: 110px; }
+        aside h3 { color: var(--gold); font-size: 20px; margin-bottom: 15px; border-right: 4px solid var(--gold); padding-right: 10px; }
+        
+        .filter-btn { display: block; width: 100%; padding: 12px; text-align: right; background: none; border: none; color: var(--gray); cursor: pointer; border-radius: 10px; font-weight: 700; font-family: 'Cairo'; margin-bottom: 5px; transition: 0.3s; }
+        .filter-btn:hover { background: #222; color: #fff; }
+        .filter-btn.active { color: #000; background: var(--gold); }
+
+        .announcement-bar { background: #111; border: 1px dashed var(--gold); padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; color: var(--gold); font-weight: bold; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; flex: 1; }
+        .card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid #222; transition: 0.4s; display: flex; flex-direction: column; }
+        .card:hover { border-color: var(--gold); transform: translateY(-8px); }
+        .card-img-container { height: 200px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 15px; overflow: hidden; cursor: pointer; margin-bottom: 12px; }
+        .card-img-container img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        
+        .slider-box { width: 400px; height: 400px; background: #000; border-radius: 20px; overflow: hidden; position: relative; margin: auto; border: 1px solid #222; }
+        .slides-track { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .slides-track img { width: 400px; height: 100%; flex-shrink: 0; object-fit: contain; padding: 20px; box-sizing: border-box; }
+        
+        .s-nav { position: absolute; top: 50%; transform: translateY(-50%); background: var(--gold); border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; z-index: 10; font-weight: bold; font-size: 20px; transition: 0.3s; }
+        
+        .next { right: 10px; } 
+        .prev { left: 10px; }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--gold); width: 25px; border-radius: 5px; }
+
+        .price { color: var(--gold); font-size: 22px; font-weight: 900; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #0a0a0a; width: 100%; max-width: 950px; padding: 35px; border-radius: 30px; border: 1px solid var(--gold); position: relative; max-height: 95vh; overflow-y: auto; }
+        .close-btn { position: absolute; left: 20px; top: 15px; font-size: 35px; cursor: pointer; color: var(--gold); z-index: 100; }
+
+        footer { background: #000; border-top: 2px solid var(--gold); padding: 40px 5%; margin-top: 50px; text-align: center; }
+        .social-links { margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
+        .social-links a { color: var(--gold); font-size: 24px; transition: 0.3s; text-decoration: none; }
+        .social-links a:hover { transform: scale(1.2); color: #fff; }
+        .copy-right { border-top: 1px solid #222; padding-top: 20px; color: var(--gray); font-size: 13px; }
+
+        .whatsapp-fab { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1500; transition: 0.3s; }
+        
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #151515; margin-bottom: 8px; border-radius: 10px; border: 1px solid #222; }
+        .cart-item-actions { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: #222; color: var(--gold); border: 1px solid #333; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; }
+        .remove-item { color: #ff4d4d; cursor: pointer; margin-right: 10px; font-weight: bold; }
+        .cart-total-bar { border-top: 2px solid var(--gold); margin-top: 15px; padding-top: 15px; font-size: 18px; font-weight: 900; display: flex; justify-content: space-between; }
+        .final-btn { width: 100%; padding: 16px; background: var(--gold); border: none; border-radius: 12px; font-weight: 900; cursor: pointer; margin-top: 15px; font-family: 'Cairo'; font-size: 17px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .form-grid input, .full-input { width: 100%; padding: 14px; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; font-family: 'Cairo'; box-sizing: border-box; }
+
+        /* تسيق رسالة التنبيه الجديدة (Toast) */
+        #toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
+        .toast { 
+            background: #111; color: var(--gold); border: 1px solid var(--gold); 
+            padding: 15px 25px; border-radius: 15px; margin-top: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px;
+            animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 2.5s forwards;
+            font-weight: bold;
+        }
+        @keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(20px); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">JAGUAR <span>STORE</span></div>
+        <div class="search-box"><input type="text" id="aiSearch" onkeyup="searchProducts()" placeholder="ابحث عن وحشك (عربي أو English)..."></div>
+        <div class="cart-icon" onclick="openCart()">🛒 (<span id="count">0</span>)</div>
+    </header>
+
+    <div id="toast-container"></div>
+
+    <div class="main-wrapper">
+        <aside>
+            <h3>الأصناف ✨</h3>
+            <button class="filter-btn active" onclick="updateCategory('all', this)">جميع المنتجات🦁</button>
+            <button class="filter-btn" onclick="updateCategory('phones', this)">هواتف 📱</button>
+            <button class="filter-btn" onclick="updateCategory('laptops', this)">لابتوب 💻</button>
+            <button class="filter-btn" onclick="updateCategory('watches', this)">ساعات ⌚</button>
+            <button class="filter-btn" onclick="updateCategory('games', this)">حسابات ألعاب 🎮</button>
+            <button class="filter-btn" onclick="updateCategory('earbuds', this)">سماعات 🎧</button>
+            <button class="filter-btn" onclick="updateCategory('acc', this)">إكسسوارات 🔌</button>
+
+            <div style="margin-top:25px; border-top:1px solid #333; padding-top:15px;">
+                <h3>السعر: <span id="pLab">150k</span></h3>
+                <input type="range" min="100" max="150000" value="150000" oninput="updatePrice(this.value)">
+            </div>
+        </aside>
+
+        <main style="flex: 1;">
+            <div class="announcement-bar"> خصومات تصل الى 30% ! 🔥</div>
+            <div class="grid" id="mainGrid"></div>
+        </main>
+    </div>
+
+    <div id="detailsModal" class="overlay"><div class="modal-content">
+        <span class="close-btn" onclick="closeAll()">&times;</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+            <div class="slider-box" id="sliderBox">
+                <button class="s-nav next" onclick="moveSlide(-1)">❮</button>
+                <div id="slidesTrack" class="slides-track"></div>
+                <button class="s-nav prev" onclick="moveSlide(1)">❯</button>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h2 id="d-title" style="color:var(--gold); margin:0; font-size: 28px;"></h2>
+                <div style="background:#111; padding:20px; border-radius:15px; margin-top:20px; border:1px solid #222;">
+                    <div id="d-specs" style="white-space: pre-line; color:#ddd; font-size:15px; line-height: 1.8;"></div>
+                </div>
+                <div class="price" id="d-price" style="font-size:38px; margin-top:20px;"></div>
+                <button class="final-btn" onclick="addToCartFromModal()">إضافة للسلة 🛒</button>
+            </div>
+        </div>
+    </div></div>
+
+    <div id="cartModal" class="overlay"><div class="modal-content" style="max-width: 550px;">
+        <span class="close-btn" onclick="closeAll()">&times;</span>
+        <h2 style="color:var(--gold); text-align:center;">إتمام الطلب 🛒</h2>
+        <div id="cartList" style="max-height: 300px; overflow-y: auto;"></div>
+        <div id="totalContainer"></div>
+        <button id="checkoutBtn" class="final-btn" onclick="showForm()">بيانات الشحن 👇</button>
+        <div id="shippingForm" style="display:none; margin-top:20px;">
+            <form onsubmit="handleOrder(event)">
+                <div class="form-grid"><input type="text" id="u_name" placeholder="الاسم الكامل" required><input type="email" id="u_email" placeholder="الإيميل" required></div>
+                <div class="form-grid"><input type="text" id="u_city" placeholder="المحافظة" required><input type="tel" id="u_phone" placeholder="رقم الموبايل" required></div>
+                <input type="text" id="u_address" class="full-input" style="margin-top:12px;" placeholder="العنوان بالتفصيل" required>
+                <button type="submit" class="final-btn" style="background:#28a745;">تأكيد الحجز 🚀</button>
+            </form>
+        </div>
+    </div></div>
+
+    <footer>
+        <div class="social-links">
+            <a href="" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@jaguarhub.eg?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="copy-right">© 2026 جميع الحقوق محفوظة لمتجر JAGUAR STORE </div>
+    </footer>
+
+    <a href="https://wa.me/201113229079" class="whatsapp-fab" target="_blank">💬</a>
+
+    <script>
+    // وظيفة الإشعار الجديدة
+    function showToast(msg, icon = '✅') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    const products = [
+        { 
+            id: 1, 
+            name: "سماعات اورايمو OTW-330", 
+            price: 799, 
+            cat: "earbuds", 
+            specs: "• وضع جيمنج (Low Latency)\n• بطارية 40 ساعة\n• بلوتوث 5.3", 
+            images: ["Images/image-1.jpg", "Images/image-2.jpg", "Images/image-3.jpg", "Images/image-4.jpg"]
+        },
+        {
+            id: 2,
+            name: "سماعات وينجو (Pink)",
+            price: 1499,
+            cat: "earbuds", 
+            specs: "• تصميم أنيق وردي\n• صوت ستيريو عالي النقاء",
+            images: ["pink_wingo/image-1.jpg", "pink_wingo/image-2.jpg", "pink_wingo/image-3.jpg"] 
+        },
+        {
+            id: 3,
+            name: "Airpods pro 2 sim original Black",
+            price: 699,
+            cat: "earbuds",
+            specs: "صوت نضيف وعزل فعلي ولوك أسود شيك",
+            images:["air_pods_pro/image-1.png", "air_pods_pro/image-2.png", "air_pods_pro/image-3.jpg"]
+        }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('jaguar_cart')) || [];
+    let sIdx = 0, activeP = null;
+    let currentCat = 'all', currentMaxPrice = 150000;
+
+    const translations = {
+        "سماعات": "earbuds airpods headphones",
+        "ايربودز": "airpods earbuds",
+        "تلفون": "phone mobile",
+        "لابتوب": "laptop computer",
+        "ساعة": "watch smart"
+    };
+
+    function searchProducts() {
+        let term = document.getElementById('aiSearch').value.toLowerCase();
+        for (let key in translations) {
+            if (term.includes(key)) term += " " + translations[key];
+        }
+        const filtered = products.filter(p => {
+            const content = (p.name + p.cat + p.specs).toLowerCase();
+            return term.split(' ').every(word => content.includes(word));
+        });
+        render(filtered);
+    }
+
+    function render(data) {
+        const grid = document.getElementById('mainGrid');
+        grid.innerHTML = data.map(p => `
+            <div class="card">
+                <div class="card-img-container" onclick="openDetails(${p.id})">
+                    <img src="${p.images[0]}" onerror="this.src='https://via.placeholder.com/300/111/FFB800?text=Jaguar'">
+                </div>
+                <h4 onclick="openDetails(${p.id})" style="cursor:pointer; padding: 0 10px;">${p.name}</h4>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px;">
+                    <div class="price">${p.price.toLocaleString()} EGP</div>
+                    <button style="background:var(--gold); border:none; width:45px; height:45px; border-radius:12px; cursor:pointer;" onclick="addToCart(${p.id})">🛒</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateSliderPosition() {
+        const track = document.getElementById('slidesTrack');
+        track.style.transform = `translateX(${sIdx * 400}px)`; 
+        const counter = document.querySelector('.counter-ui');
+        if(counter) counter.innerText = `${sIdx + 1} / ${activeP.images.length}`;
+        document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === sIdx));
+    }
+
+    function moveSlide(n) {
+        if (!activeP || !activeP.images.length) return;
+        sIdx += n; 
+        if (sIdx < 0) sIdx = activeP.images.length - 1;
+        else if (sIdx >= activeP.images.length) sIdx = 0;
+        updateSliderPosition();
+    }
+
+    function goToSlide(n) { sIdx = n; updateSliderPosition(); }
+
+    function openDetails(id) {
+        activeP = products.find(i => i.id === id);
+        document.getElementById('d-title').innerText = activeP.name;
+        document.getElementById('d-specs').innerText = activeP.specs;
+        document.getElementById('d-price').innerText = activeP.price.toLocaleString() + " EGP";
+        const track = document.getElementById('slidesTrack');
+        track.innerHTML = activeP.images.map(img => `<img src="${img}" onerror="this.src='https://via.placeholder.com/400/111/FFB800?text=Error'">`).join('');
+        sIdx = 0; 
+        setupSliderUI(); 
+        updateSliderPosition();
+        document.getElementById('detailsModal').style.display = 'flex';
+    }
+
+    function setupSliderUI() {
+        const sliderBox = document.getElementById('sliderBox');
+        sliderBox.querySelectorAll('.counter-ui, .dots-ui').forEach(el => el.remove());
+        sliderBox.insertAdjacentHTML('beforeend', `<div class="counter-ui" style="position:absolute; top:15px; right:15px; background:rgba(0,0,0,0.7); padding:5px 15px; border-radius:10px; color:var(--gold); z-index:11; font-weight:bold; font-size:14px;">1 / ${activeP.images.length}</div>`);
+        sliderBox.insertAdjacentHTML('beforeend', `<div class="dots-ui" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:11;">${activeP.images.map((_, i) => `<div class="dot" onclick="goToSlide(${i})"></div>`).join('')}</div>`);
+    }
+
+    function applyFilters() {
+        let filtered = products.filter(p => (currentCat === 'all' || p.cat === currentCat) && p.price <= currentMaxPrice);
+        render(filtered);
+    }
+
+    function updateCategory(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        currentCat = cat; applyFilters();
+    }
+
+    function updatePrice(val) {
+        document.getElementById('pLab').innerText = parseInt(val).toLocaleString() + " EGP";
+        currentMaxPrice = parseInt(val); applyFilters();
+    }
+
+    function addToCart(id) { 
+        const product = products.find(i => i.id === id);
+        const exist = cart.find(i => i.id === id);
+        if(exist) exist.qty++; else cart.push({...product, qty: 1});
+        saveCart();
+        showToast("تمت الإضافة لعرين الجاجوار!"); // تم استبدال الـ alert
+    }
+
+    function saveCart() {
+        document.getElementById('count').innerText = cart.reduce((s, i) => s + i.qty, 0); 
+        localStorage.setItem('jaguar_cart', JSON.stringify(cart));
+    }
+
+    function openCart() { 
+        document.getElementById('cartModal').style.display = 'flex'; 
+        const list = document.getElementById('cartList');
+        const totalBox = document.getElementById('totalContainer');
+        if(!cart.length) {
+            list.innerHTML = "<p style='text-align:center; padding:20px;'>السلة فارغة</p>";
+            totalBox.innerHTML = ""; return;
+        }
+        list.innerHTML = cart.map((item, idx) => `
+            <div class='cart-item'>
+                <div><span class="remove-item" onclick="removeItem(${idx})">&times;</span><span>${item.name}</span></div>
+                <div class="cart-item-actions">
+                    <button class="qty-btn" onclick="updateQty(${idx}, -1)">-</button>
+                    <span>${item.qty}</span>
+                    <button class="qty-btn" onclick="updateQty(${idx}, 1)">+</button>
+                    <strong>${(item.price * item.qty).toLocaleString()} EGP</strong>
+                </div>
+            </div>`).join('');
+        const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+        totalBox.innerHTML = `<div class="cart-total-bar"><span>الإجمالي:</span><span>${total.toLocaleString()} EGP</span></div>`;
+    }
+
+    function updateQty(idx, n) {
+        cart[idx].qty += n;
+        if(cart[idx].qty < 1) cart[idx].qty = 1;
+        saveCart(); openCart();
+    }
+
+    function removeItem(idx) {
+        cart.splice(idx, 1);
+        saveCart(); openCart();
+        showToast("تم الحذف من السلة", "🗑️");
+    }
+
+    function addToCartFromModal() { addToCart(activeP.id); closeAll(); }
+    function closeAll() { document.querySelectorAll('.overlay').forEach(m => m.style.display = 'none'); }
+    
+    function showForm() { 
+        if(cart.length) document.getElementById('shippingForm').style.display = 'block'; 
+        else showToast("أضف منتجات أولاً!", "⚠️"); // استبدال alert
+    }
+
+    function handleOrder(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerText = "جاري الإرسال..."; btn.disabled = true;
+        const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+        const params = { 
+            u_name: document.getElementById('u_name').value, 
+            u_phone: document.getElementById('u_phone').value, 
+            u_order: cart.map(i => `${i.name} (${i.qty})`).join(' + '), 
+            u_total: total.toLocaleString() + " EGP" 
+        };
+        emailjs.send("service_wrb4twl", "template_1o7unml", params).then(() => { 
+            showToast("تم استلام طلبك يا وحش! 🚀"); // استبدال alert
+            cart = []; saveCart(); closeAll(); 
+        }).finally(() => { btn.innerText = "تأكيد الحجز 🚀"; btn.disabled = false; });
+    }
+
+    window.onload = () => { render(products); saveCart(); };
+    </script>
+</body>
+</html>

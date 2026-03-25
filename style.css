@@ -1,0 +1,117 @@
+/* 1. تصفير الإعدادات */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #050505;
+    color: #fff;
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.6;
+    overflow: hidden;
+}
+
+/* 2. الحاوية الرئيسية */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+}
+
+/* 3. الإضاءة (توزيـع متناسق) */
+.glow-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,184,0,0.08) 0%, transparent 70%);
+    z-index: 1;
+}
+
+/* 4. الناف بار (موقع متناظر) */
+.navbar {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* توسيط اللوجو مع المحتوى */
+    z-index: 10;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    font-weight: 700;
+}
+
+.logo span {
+    color: #FFB800;
+}
+
+/* 5. المحتوى (التناسق البصري) */
+.content-wrapper {
+    text-align: center;
+    z-index: 5;
+    max-width: 850px;
+    padding: 0 20px;
+}
+
+.main-title {
+    font-size: clamp(45px, 7vw, 90px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.main-title span {
+    color: #FFB800;
+    display: inline-block;
+}
+
+.description {
+    font-size: 19px;
+    color: #a0a0a0;
+    max-width: 600px;
+    margin: 0 auto 45px;
+    font-weight: 400;
+}
+
+/* 6. الزرار (توازن الحجم) */
+.btn-primary {
+    display: inline-block;
+    background: #FFB800;
+    color: #050505;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid #FFB800;
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: #FFB800;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 184, 0, 0.2);
+}
+
+/* 7. حركة دخول ناعمة */
+.content-wrapper {
+    animation: contentFade 1.4s ease-out;
+}
+
+@keyframes contentFade {
+    from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
