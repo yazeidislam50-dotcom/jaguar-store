@@ -352,14 +352,14 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             border: 1px solid rgba(255,184,0,0.45);
             border-radius: 50%;
-            background: rgba(10,10,10,0.82);
+            background: rgba(10,10,10,0.72);
             color: var(--gold);
             cursor: pointer;
-            z-index: 2;
+            z-index: 5;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -367,6 +367,8 @@
             opacity: 1;
             box-shadow: 0 8px 18px rgba(0,0,0,0.35);
             backdrop-filter: blur(8px);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .gallery-btn:hover {
@@ -377,8 +379,8 @@
             box-shadow: 0 12px 24px rgba(255,184,0,0.28);
         }
 
-        .gallery-btn.prev { right: 10px; }
-        .gallery-btn.next { left: 10px; }
+        .gallery-btn.prev { right: 8px; }
+        .gallery-btn.next { left: 8px; }
 
         .gallery-dots {
             position: absolute;
@@ -720,11 +722,11 @@
 
             aside {
                 position: fixed;
-                top: 86px;
+                top: 138px;
                 right: 14px;
                 left: 14px;
                 width: auto;
-                max-height: calc(100vh - 120px);
+                max-height: calc(100vh - 170px);
                 z-index: 1800;
                 opacity: 0;
                 visibility: hidden;
@@ -781,9 +783,9 @@
             }
 
             .gallery-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 12px;
+                width: 44px;
+                height: 44px;
+                font-size: 13px;
             }
 
             .card-title {
@@ -797,13 +799,19 @@
             }
 
             .promo-banner {
-                padding: 24px 14px;
-                border-radius: 20px;
+                padding: 18px 10px;
+                border-radius: 18px;
+            }
+
+            .promo-banner p {
+                font-size: 11px;
+                margin-bottom: 6px;
             }
 
             .promo-banner h2 {
-                font-size: 22px;
+                font-size: 15px;
                 line-height: 1.6;
+                margin: 0;
             }
 
             .modal-content {
@@ -845,6 +853,20 @@
                 min-height: auto;
             }
 
+            .promo-banner {
+                padding: 14px 8px;
+            }
+
+            .promo-banner p {
+                font-size: 10px;
+                margin-bottom: 4px;
+            }
+
+            .promo-banner h2 {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
             .modal-gallery {
                 height: 210px;
             }
@@ -860,7 +882,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <div class="settings-panel" id="settingsPanel">
-        <h3 style="color:var(--gold)">تخصيص العرين <i class="fas fa-magic"></i></h3>
+        <h3 style="color:var(--gold)">تخصيص  <i class="fas fa-magic"></i></h3>
         <div class="setting-item">
             <label>لون الهوية</label>
             <input type="color" id="goldColorPicker" value="#FFB800" oninput="updateTheme('gold', this.value)">
@@ -900,10 +922,10 @@
                 <button class="filter-btn pressable" onclick="updateCategory('watches', this)"><span>ساعات سمارت</span> <i class="fas fa-clock"></i></button>
                 <button class="filter-btn pressable" onclick="updateCategory('games', this)"><span>حسابات ألعاب</span> <i class="fas fa-gamepad"></i></button>
                 <button class="filter-btn pressable" onclick="updateCategory('earbuds', this)"><span>سماعات Wireless</span> <i class="fas fa-headset"></i></button>
-                <button class="filter-btn pressable" onclick="updateCategory('acc', this)"><span>إكسسوارات وحوش</span> <i class="fas fa-bolt"></i></button>
+                <button class="filter-btn pressable" onclick="updateCategory('acc', this)"><span>إكسسوارات </span> <i class="fas fa-bolt"></i></button>
 
                 <div style="margin-top:20px; border-top:1px solid #333; padding-top:15px;">
-                    <h3 style="font-size:14px;">ميزانية الوحوش: <span id="pLab" style="color:var(--gold)">150,000</span></h3>
+                    <h3 style="font-size:14px;">الميزانيه: <br> <span id="pLab" style="color:var(--gold)">150,000</span></h3>
                     <input type="range" id="priceRange" min="100" max="150000" value="150000" style="width: 100%; accent-color: var(--gold);" oninput="filterEverything()">
                 </div>
             </div>
@@ -911,7 +933,7 @@
 
         <main id="mainContent">
             <div class="promo-banner">
-                <p>عروض عرين الوحوش لفترة محدودة</p>
+                <p>عروض مميزه لفترة محدودة</p>
                 <h2>خصومات تصل إلى <span style="color:var(--gold)">30%</span> على جميع المنتجات</h2>
             </div>
             <div class="grid" id="mainGrid"></div>
@@ -923,16 +945,16 @@
             <span onclick="closeAll()" class="pressable" style="float:left; cursor:pointer; color:var(--gold); font-size:30px;">&times;</span>
 
             <div class="modal-gallery">
-                <button class="gallery-btn prev pressable" onclick="changeModalImage(-1, event)"><i class="fas fa-chevron-right"></i></button>
+                <button class="gallery-btn prev pressable" onclick="changeModalImage(-1, event)" ontouchstart="changeModalImage(-1, event)"><i class="fas fa-chevron-right"></i></button>
                 <img id="d-img" src="">
-                <button class="gallery-btn next pressable" onclick="changeModalImage(1, event)"><i class="fas fa-chevron-left"></i></button>
+                <button class="gallery-btn next pressable" onclick="changeModalImage(1, event)" ontouchstart="changeModalImage(1, event)"><i class="fas fa-chevron-left"></i></button>
                 <div class="gallery-dots" id="modalDots"></div>
             </div>
 
             <h2 id="d-title" style="color:var(--gold); margin:0;"></h2>
             <p id="d-specs" style="color:#ddd; font-size:14px; white-space:pre-line; margin:15px 0;"></p>
             <div id="d-price" style="font-size:26px; font-weight:900; color:var(--gold); margin-bottom:15px;"></div>
-            <button class="final-btn pressable" onclick="addToCartFromModal()">أضف لعرينك الآن 🛒</button>
+            <button class="final-btn pressable" onclick="addToCartFromModal()">أضف لسلتك الآن 🛒</button>
         </div>
     </div>
 
@@ -949,7 +971,7 @@
             <div id="shippingForm" style="display:none; margin-top:20px;">
                 <form onsubmit="handleOrder(event)">
                     <input type="text" id="u_name" class="premium-input" placeholder="الاسم بالكامل" required>
-                    <input type="tel" id="u_phone" class="premium-input" placeholder="رقم الواتساب" required>
+                    <input type="tel" id="u_phone" class="premium-input" placeholder="رقم الواتساب" pattern="^(01)[0-2,5]{1}[0-9]{8}$" maxlength="11" inputmode="numeric" required>
                     <input type="text" id="u_gov" class="premium-input" placeholder="المحافظة" required>
                     <input type="text" id="u_address" class="premium-input" placeholder="العنوان بالتفصيل" required>
                     <button type="submit" id="submitBtn" class="final-btn pressable" style="background:#28a745;">تأكيد وحجز الوحش ✅</button>
@@ -962,7 +984,7 @@
         <div class="footer-grid">
             <div class="footer-section">
                 <div class="logo">JAGUAR <span>STORE</span></div>
-                <p>وجهتك الأولى لأقوى العتاد الإلكتروني وحسابات الألعاب في مصر.</p>
+                <p>وجهتك الأولى لأقوى العتاد الإلكتروني و الاكسسوارات في مصر.</p>
                 <div class="contact-info">
                     <p><i class="fab fa-whatsapp"></i> +20 111 322 9079</p>
                     <p><i class="fas fa-envelope"></i> support@jaguarstore.com</p>
@@ -991,7 +1013,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>جميع الحقوق محفوظة لمتجر جاجوار © 2026 | تطوير عرين الوحوش</p>
+            <p>جميع الحقوق محفوظة لمتجر جاجوار © 2026 </p>
         </div>
     </footer>
 
@@ -1092,9 +1114,9 @@
             return `
                 <div class="card pressable" style="animation-delay: ${index * 0.1}s">
                     <div class="product-gallery pressable" onclick="openDetails(${p.id})">
-                        <button class="gallery-btn prev pressable" onclick="changeCardImage(${p.id}, -1, event)"><i class="fas fa-chevron-right"></i></button>
+                        <button class="gallery-btn prev pressable" onclick="changeCardImage(${p.id}, -1, event)" ontouchstart="changeCardImage(${p.id}, -1, event)"><i class="fas fa-chevron-right"></i></button>
                         <img data-product-image="${p.id}" src="${p.images[currentImage]}" alt="${p.name}">
-                        <button class="gallery-btn next pressable" onclick="changeCardImage(${p.id}, 1, event)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="gallery-btn next pressable" onclick="changeCardImage(${p.id}, 1, event)" ontouchstart="changeCardImage(${p.id}, 1, event)"><i class="fas fa-chevron-left"></i></button>
                         <div class="gallery-dots" data-product-dots="${p.id}">
                             ${p.images.map((_, i) => `<span class="gallery-dot ${i === currentImage ? 'active' : ''}"></span>`).join('')}
                         </div>
@@ -1114,15 +1136,34 @@
     }
 
     function changeCardImage(id, direction, event) {
-        if (event) event.stopPropagation();
+        if (event) {
+            event.stopPropagation();
+            if (typeof event.preventDefault === 'function') event.preventDefault();
+        }
+
         const p = products.find(i => i.id === id);
         if (!p || !p.images.length) return;
+
         const current = productImageIndexes[id] || 0;
         let next = current + direction;
+
         if (next < 0) next = p.images.length - 1;
         if (next >= p.images.length) next = 0;
+
         productImageIndexes[id] = next;
-        filterEverything();
+
+        const cardImage = document.querySelector(`[data-product-image="${id}"]`);
+        const dotsContainer = document.querySelector(`[data-product-dots="${id}"]`);
+
+        if (cardImage) {
+            cardImage.src = p.images[next];
+        }
+
+        if (dotsContainer) {
+            dotsContainer.innerHTML = p.images.map((_, i) =>
+                `<span class="gallery-dot ${i === next ? 'active' : ''}"></span>`
+            ).join('');
+        }
     }
 
     function normalizeArabicText(text) {
@@ -1173,24 +1214,41 @@
     }
 
     function clearAutoSlideTimers() {
-        Object.values(autoSlideTimers).forEach(timer => clearInterval(timer));
+        Object.values(autoSlideTimers).forEach(timer => clearTimeout(timer));
         autoSlideTimers = {};
     }
 
     function startAutoSlide(visibleProducts) {
         clearAutoSlideTimers();
+
         visibleProducts.forEach(product => {
             if (!product.images || product.images.length <= 1) return;
-            autoSlideTimers[product.id] = setInterval(() => {
-                const current = productImageIndexes[product.id] || 0;
-                productImageIndexes[product.id] = (current + 1) % product.images.length;
-                const cardImage = document.querySelector(`[data-product-image="${product.id}"]`);
-                const dotsContainer = document.querySelector(`[data-product-dots="${product.id}"]`);
-                if (cardImage) cardImage.src = product.images[productImageIndexes[product.id]];
-                if (dotsContainer) {
-                    dotsContainer.innerHTML = product.images.map((_, i) => `<span class="gallery-dot ${i === productImageIndexes[product.id] ? 'active' : ''}"></span>`).join('');
-                }
-            }, 3000);
+
+            const runSlide = () => {
+                const delay = Math.floor(Math.random() * 3000) + 3000;
+
+                autoSlideTimers[product.id] = setTimeout(() => {
+                    const current = productImageIndexes[product.id] || 0;
+                    productImageIndexes[product.id] = (current + 1) % product.images.length;
+
+                    const cardImage = document.querySelector(`[data-product-image="${product.id}"]`);
+                    const dotsContainer = document.querySelector(`[data-product-dots="${product.id}"]`);
+
+                    if (cardImage) {
+                        cardImage.src = product.images[productImageIndexes[product.id]];
+                    }
+
+                    if (dotsContainer) {
+                        dotsContainer.innerHTML = product.images.map((_, i) =>
+                            `<span class="gallery-dot ${i === productImageIndexes[product.id] ? 'active' : ''}"></span>`
+                        ).join('');
+                    }
+
+                    runSlide();
+                }, delay);
+            };
+
+            runSlide();
         });
     }
 
@@ -1231,18 +1289,58 @@
     function openCart() {
         document.getElementById('cartModal').style.display = 'flex';
         const list = document.getElementById('cartList');
+
         if(!cart.length) {
             list.innerHTML = "<p style='text-align:center;'>السلة فارغة</p>";
             document.getElementById('totalContainer').innerText = "";
             return;
         }
+
         list.innerHTML = cart.map(item => `
-            <div style="display:flex; justify-content:space-between; padding:10px; background:#111; margin-bottom:5px; border-radius:10px;">
-                <span>${item.name} (x${item.qty})</span>
-                <span style="color:var(--gold);">${(item.price * item.qty).toLocaleString()} EGP</span>
-            </div>`).join('');
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#111; margin-bottom:5px; border-radius:10px; gap:10px;">
+                <div style="flex:1;">
+                    <div>${item.name}</div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                        <button onclick="decreaseQty(${item.id})" style="width:28px;height:28px;border:none;border-radius:6px;background:#222;color:#fff;cursor:pointer;">-</button>
+                        <span>${item.qty}</span>
+                        <button onclick="increaseQty(${item.id})" style="width:28px;height:28px;border:none;border-radius:6px;background:#222;color:#fff;cursor:pointer;">+</button>
+                    </div>
+                </div>
+
+                <div style="text-align:left;">
+                    <div style="color:var(--gold);">${(item.price * item.qty).toLocaleString()} EGP</div>
+                    <button onclick="removeItem(${item.id})" style="margin-top:5px; background:red; color:#fff; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;">حذف</button>
+                </div>
+            </div>
+        `).join('');
+
         document.getElementById('totalContainer').innerText =
             "الإجمالي: " + cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString() + " EGP";
+    }
+
+    function increaseQty(id) {
+        const item = cart.find(i => i.id === id);
+        if(item) item.qty++;
+        saveCart();
+        openCart();
+    }
+
+    function decreaseQty(id) {
+        const item = cart.find(i => i.id === id);
+        if(item) {
+            item.qty--;
+            if(item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+        }
+        saveCart();
+        openCart();
+    }
+
+    function removeItem(id) {
+        cart = cart.filter(i => i.id !== id);
+        saveCart();
+        openCart();
     }
 
     function handleOrder(e) {
@@ -1263,7 +1361,7 @@
             saveCart();
             closeAll();
         }).finally(() => {
-            btn.innerText = "تأكيد وحجز الوحش ✅";
+            btn.innerText = "تأكيد وحجز المنتج ✅";
         });
     }
 
@@ -1342,4 +1440,4 @@
     };
     </script>
 </body>
-</html>
+</html> 
