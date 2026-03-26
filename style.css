@@ -1,155 +1,217 @@
-/* 1. تصفير الإعدادات */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 1. التأسيس - منع السكرول وتثبيت اللون */
+html {
+    background-color: #030303;
+    overflow: hidden; /* منع السكرول تماماً للفخامة */
 }
 
 body {
-    background-color: #050505;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #030303;
     color: #fff;
     font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    overflow: hidden;
+    -webkit-font-smoothing: antialiased; /* لجعل الخطوط أنعم */
 }
 
-/* 2. الحاوية الرئيسية */
+/* --- ترسانة الأنيميشن فائقة النعومة (Ultra-Smooth) --- */
+
+/* أنيميشن الدخول الشامل (Universal Reveal Up) */
+/* يبدأ من الأسفل، شفاف، ومضغوط قليلاً، ثم يستقر بنعومة */
+@keyframes revealUp {
+    0% { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.95); /* يبدأ من أسفل ومضغوط */
+        filter: blur(10px); /* تأثير ضبابي للدخول الساحر */
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+        filter: blur(0); 
+    }
+}
+
+/* أنيميشن حركة اللوجو المستمرة بعد الدخول (Floating & Glow) */
+@keyframes logoPulse {
+    0%, 100% { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 0 5px rgba(255,184,0,0.2)); }
+    50% { transform: translateY(-5px) rotate(1deg); filter: drop-shadow(0 0 15px rgba(255,184,0,0.5)); }
+}
+
+/* أنيميشن الخلفية (بطيء جداً لراحة العين) */
+@keyframes auroraSoft {
+    0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    50% { transform: translate(-48%, -52%) rotate(90deg) scale(1.1); }
+    100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+}
+
+/* أنيميشن المحتوى (تنفس فيزيائي) */
+@keyframes physicalFloat {
+    0%, 100% { transform: translateY(0) translateZ(0); }
+    50% { transform: translateY(-15px) translateZ(20px); }
+}
+
+/* --- الهيكل الرئيسي --- */
+
 .hero {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+    background: radial-gradient(circle at center, #111 0%, #030303 100%);
+    overflow: hidden;
+    perspective: 1200px; /* لإعطاء بعد تالت للمحتوى */
 }
 
-/* 3. الإضاءة (توزيـع متناسق) */
 .glow-bg {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(255,184,0,0.08) 0%, transparent 70%);
+    width: 90vw;
+    height: 90vw;
+    background: radial-gradient(circle, rgba(255,184,0,0.06) 0%, transparent 65%);
+    filter: blur(120px);
     z-index: 1;
+    animation: auroraSoft 25s linear infinite; /* بطيء جداً ليحاكي السحاب */
+    pointer-events: none;
 }
 
-/* 4. الناف بار (موقع متناظر) */
+/* --- الناف بار واللوجو --- */
 .navbar {
-    position: absolute;
-    top: 40px;
+    position: fixed;
+    top: 0;
     width: 100%;
+    height: 90px;
+    z-index: 100;
     display: flex;
-    justify-content: center; /* توسيط اللوجو مع المحتوى */
-    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(3, 3, 3, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 26px;
-    letter-spacing: 4px;
-    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: letter-spacing 0.5s ease;
+    
+    /* أنيميشن الدخول: العنصر الأول ( Delay: 0s ) */
+    /* منحنى Cubic Bezier فائق النعومة للحركة */
+    animation: 
+        revealUp 1.8s cubic-bezier(0.19, 1, 0.22, 1) forwards,
+        logoPulse 5s ease-in-out infinite 1.8s; /* يبدأ النبض بعد انتهاء الدخول */
+}
+
+.logo:hover {
+    letter-spacing: 12px;
+    color: #FFB800;
 }
 
 .logo span {
     color: #FFB800;
 }
 
-/* 5. المحتوى (التناسق البصري) */
+/* --- الحاوية الرئيسية للمحتوى (Main Content) --- */
 .content-wrapper {
     text-align: center;
     z-index: 5;
-    max-width: 850px;
+    max-width: 950px;
     padding: 0 20px;
+    /* أنيميشن الطفو المستمر فقط (أنيميشن الدخول تم نقله للعناصر بالداخل) */
+    animation: physicalFloat 8s ease-in-out infinite;
 }
+
+/* تخصيص أنيميشن الدخول للعناصر الداخلية (The Stagger Effect) */
+
+.main-title,
+.description,
+.btn-primary {
+    opacity: 0; /* نخفيهم في البداية */
+    /* نطبق نفس أنيميشن الدخول ونفس المنحنى النعم */
+    animation-name: revealUp;
+    animation-duration: 2s; /* مدة طويلة لنعومة أكثر */
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    animation-fill-mode: forwards; /* يحافظ على الحالة النهائية للأنيميشن */
+}
+
+/* توزيع الوقت (Delay) - هنا السحر */
 
 .main-title {
-    font-size: clamp(45px, 7vw, 90px);
+    /* العنصر الثاني ( Delay: 0.3s ) */
+    animation-delay: 0.3s;
+    
+    font-size: clamp(45px, 12vw, 90px);
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 0.95;
     margin-bottom: 25px;
-    letter-spacing: -1px;
-}
-
-.main-title span {
-    color: #FFB800;
-    display: inline-block;
+    letter-spacing: -2px;
+    background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .description {
-    font-size: 19px;
-    color: #a0a0a0;
+    /* العنصر الثالث ( Delay: 0.6s ) */
+    animation-delay: 0.6s;
+    
+    font-size: clamp(16px, 4vw, 20px);
+    color: rgba(255,255,255,0.5);
     max-width: 600px;
-    margin: 0 auto 45px;
-    font-weight: 400;
+    margin: 0 auto 50px;
+    line-height: 1.8;
+    font-weight: 300;
 }
 
-/* 6. الزرار (توازن الحجم) */
+/* --- الزرار (The Premium Button) --- */
 .btn-primary {
+    /* العنصر الرابع الأخير ( Delay: 0.9s ) */
+    animation-delay: 0.9s;
+    
     display: inline-block;
     background: #FFB800;
-    color: #050505;
-    padding: 16px 48px;
-    border-radius: 50px;
+    color: #000;
+    padding: 20px 60px;
+    border-radius: 100px;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: none;
-    transition: all 0.3s ease;
-    border: 2px solid #FFB800;
+    position: relative;
+    overflow: hidden;
+    /* transition: 0.6scubic-bezier(0.16, 1, 0.3, 1) cubic-bezier(0.19, 1, 0.22, 1);  للهوفر */
+    box-shadow: 0 15px 40px rgba(255,184,0,0.2);
+}
+
+/* تعديل الـ transition في الهوفر ليتناسب مع النعومة الجديدة */
+.btn-primary {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.6s ease, box-shadow 0.6s ease;
 }
 
 .btn-primary:hover {
-    background: transparent;
-    color: #FFB800;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(255, 184, 0, 0.2);
+    transform: scale(1.1) translateY(-8px);
+    background: #fff;
+    box-shadow: 0 25px 50px rgba(255,184,0,0.4);
 }
 
-/* 7. حركة دخول ناعمة */
-.content-wrapper {
-    animation: contentFade 1.4s ease-out;
-}
-
-@keyframes contentFade {
-    from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-    to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-/* استخدم النسب المئوية للأحجام الكبيرة */
-.container, .product-grid {
+/* تأثير لمعة انسيابية جداً */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
     width: 100%;
-    max-width: 1200px; /* للكمبيوتر */
-    margin: 0 auto;
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap; /* أهم خاصية للموبايل عشان العناصر تنزل تحت بعض */
-    justify-content: center;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: rotate(25deg);
+    transition: 0.8s;
 }
 
-/* الكارت نفسه خليه مرن */
-.product-card {
-    width: 90%; /* ياخد الشاشة كلها في الموبايل الصغير */
-    max-width: 280px; /* ميزيدش عن كدة في الشاشات الكبيرة */
-}
-
-
-/* ضبط عام لكل العناصر عشان م تخرجش بره الشاشة */
-* {
-    box-sizing: border-box;
-    max-width: 100%;
-}
-
-/* ضبط الصور عشان تصغر مع الموبايل */
-img {
-    height: auto;
-    display: block;
-}
-
-/* أهم كود للموبايل: يخلي العناصر تنزل تحت بعض بدل ما تختفي */
-.navbar, .button-group, .content-wrapper {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center;
-    gap: 10px;
+.btn-primary:hover::after {
+    left: 150%;
 }
