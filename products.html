@@ -624,6 +624,36 @@
             text-align: center;
             animation: fadeInUp 0.8s ease;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+            box-sizing: border-box;
+        }
+
+        .promo-banner p {
+            margin: 0 0 8px;
+        }
+
+        .promo-title {
+            margin: 0;
+            text-align: center;
+            display: grid;
+            justify-items: center;
+        }
+
+        .promo-title .promo-line,
+        .promo-title .promo-percent {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .promo-title .promo-line {
+            direction: rtl;
+        }
+
+        .promo-percent {
+            color: var(--gold);
+            font-weight: 900;
+            line-height: 1;
+            margin: 6px 0;
         }
 
         .premium-input {
@@ -808,10 +838,14 @@
                 margin-bottom: 6px;
             }
 
-            .promo-banner h2 {
+            .promo-title {
                 font-size: 15px;
                 line-height: 1.6;
-                margin: 0;
+            }
+
+            .promo-percent {
+                font-size: 17px;
+                margin: 4px 0;
             }
 
             .modal-content {
@@ -862,9 +896,13 @@
                 margin-bottom: 4px;
             }
 
-            .promo-banner h2 {
+            .promo-title {
                 font-size: 13px;
                 line-height: 1.5;
+            }
+
+            .promo-percent {
+                font-size: 15px;
             }
 
             .modal-gallery {
@@ -934,7 +972,11 @@
         <main id="mainContent">
             <div class="promo-banner">
                 <p>عروض مميزه لفترة محدودة</p>
-                <h2>خصومات تصل إلى <span style="color:var(--gold)">30%</span> على جميع المنتجات</h2>
+                <h2 class="promo-title">
+                    <span class="promo-line">خصومات تصل إلى</span>
+                    <span class="promo-percent">30%</span>
+                    <span class="promo-line">على جميع المنتجات</span>
+                </h2>
             </div>
             <div class="grid" id="mainGrid"></div>
         </main>
@@ -1440,4 +1482,4 @@
     };
     </script>
 </body>
-</html> 
+</html>
