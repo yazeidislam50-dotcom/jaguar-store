@@ -167,6 +167,24 @@
      object-fit:contain;
     transition:0.3s;
     }
+
+    .card-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  }
+
+  .add-btn{
+  flex:1;
+  }
+
+
+    
+
+
+
+    
  </style>
 </head>
 <body>
@@ -345,7 +363,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <div class="logo" style="margin-bottom:10px" onclick="scrollToTop()"><div class="logo-badge"><i class="fa-solid fa-bolt"></i></div> <span>JAGUAR STORE</span></div>
+          <div class="logo" style="margin-bottom:10px" onclick="scrollToTop()"><div class="logo-badge"><i class="fa-solid fa-bolt"></i></div>STORE <span>JAGUAR</span></div>
           <p>وجهتك لعرض المنتجات الإلكترونية بشكل أنيق و سهل.</p>
           <p><i class="fa-brands fa-whatsapp" style="color:var(--gold)"></i> +20 111 322 9079</p>
           <p><i class="fa-solid fa-envelope" style="color:var(--gold)"></i> support@jaguarstore.com</p>
@@ -387,7 +405,9 @@
       <div class="specs" id="modalSpecs"></div>
       <div class="modal-row">
         <div class="price" id="modalPrice"></div>
-        <button class="primary-btn pressable" type="button" onclick="addActiveProductToCart()">أضف للسلة الآن</button>
+        <button class="add-btn pressable" type="button" onclick="addToCart(${p.id})">
+        🛒 اضف للسله الان
+      </button>
       </div>
     </div>
   </div>
@@ -405,9 +425,10 @@
       </div>
       <div id="orderForm" style="display:none">
         <div class="form-grid">
-          <input class="input" id="userName" type="text" placeholder="الاسم بالكامل">
-          <input class="input" id="userPhone" type="tel" placeholder="رقم الواتساب">
-          <input class="input" id="userGov" type="text" placeholder="المحافظة">
+          <input class="input" id="userEmail" type="email" placeholder="البريد الإلكتروني" required>
+          <input class="input" id="userName" type="text" placeholder="الاسم بالكامل" required>
+          <input class="input" id="userPhone" type="number" placeholder="رقم الواتساب" required>
+          <input class="input" id="userGov" type="text" placeholder="المحافظة" required>
           <textarea class="input textarea" id="userAddress" placeholder="العنوان بالتفصيل"></textarea>
         </div>
         <button class="primary-btn pressable" type="button" style="width:100%;margin-top:14px" onclick="submitOrder()">تأكيد الطلب</button>
@@ -443,6 +464,54 @@
         rating: 4.8,
         specs: "• تصميم وردي مميز",
         images: ["pink_wingo/image-1.jpg","pink_wingo/image-2.jpg","pink_wingo/image-3.jpg","pink_wingo/image-4.jpg","pink_wingo/image-5.jpg"]
+      },
+      {
+        id: 3,
+        name: "ساعه سمارت شبيهة ابل",
+        price:999,
+        cat: "watches",
+        badge: "ساعة سمارت...",
+        rating: 4.5,
+        specs: "ساعة سمارت شكلها Apple Watch، ومليانة مميزات ذكية تناسب حياتك اليومية – ومش هتكلفك كتير!",
+        images : ["ساعه سمارت شبيهة ابل/image-1.jpeg","ساعه سمارت شبيهة ابل/image-2.jpg","ساعه سمارت شبيهة ابل/image-3.jpg","ساعه سمارت شبيهة ابل/image-4.jpg",
+          "ساعه سمارت شبيهة ابل/image-5.jpg","ساعه سمارت شبيهة ابل/image-6.png"
+        ]
+      },
+      {
+        id: 4,
+        name: "باور بانك 2 في 1 من ماجينتك",
+        price:699,
+        cat: "phones",
+        badge: "باور بانك...",
+        rating: 4.6,
+        specs:  "انسَ القلق من نفاد البطارية! 🔋",
+        images : ["باور بانك 2 في 1 من ماجينتك/image-1.jpg","باور بانك 2 في 1 من ماجينتك/image-2.png","باور بانك 2 في 1 من ماجينتك/image-3.png",
+          "باور بانك 2 في 1 من ماجينتك/image-4.png","باور بانك 2 في 1 من ماجينتك/image-5.png","باور بانك 2 في 1 من ماجينتك/image-6.png"
+        ]
+      },
+      {
+       id: 5,
+       name: " Android TV BOX & Game Stick 10K",
+       price:1999,
+       cat: "accessories",
+       badge: "تلفزيون ذكي...",
+       rating: 4.9,
+       specs: "• عايز تحول التلفزيون العادي بتاعك لـ Smart TV بكل سهولة؟ الـ Android TV BOX & Game Stick 10K الحل الأمثل! الجهاز ده بيحول أي تلفزيون لـ Smart TV في ثواني، وهتقدر تستمتع بمشاهدة الأفلام والمسلسلات، وتصفح الإنترنت، وتشغيل التطبيقات، وكمان تلعب الألعاب كل ده على شاشة التلفزيون الكبيرة. تخيل نفسك بتلعب ألعاب الفيديو بجودة عالية على شاشة كبيرة، أو بتتفرج على مباريات الكورة مع أصحابك، المتعة مضمونة!",
+        images : ["Android TV BOX & Game Stick 10K/image-1.png","Android TV BOX & Game Stick 10K/image-2.jpg","Android TV BOX & Game Stick 10K/image-3.jpg",
+        "Android TV BOX & Game Stick 10K/image-4.jpg"
+        ]
+      },
+      {
+       id: 6,
+       name: " دراع الالعاب الترند 500 لعبة",
+       price:599,
+       cat: "accessories",
+       badge: "درع الألعاب...",
+       rating: 4.4,
+ specs: "• *أفكار للمحتوى:*\n• بتدور علي جهاز تقدر تلعب عليه 500 لعبة براحتك وكل لما تزهق من لعبة تجيب غيرها ؟ جبنالك دراع الألعاب فيه 500 لعبة + كل ده انه حجمه صغير تقدر تاخده معاك في كل حته .\n• #تخفيضات متفوقة",
+        images : ["دراع الالعاب الترند 500 لعبة/image-1.png","دراع الالعاب الترند 500 لعبة/image-2.jpg","دراع الالعاب الترند 500 لعبة/image-3.png","دراع الالعاب الترند 500 لعبة/image-4.jpg","دراع الالعاب الترند 500 لعبة/image-5.jpg"
+ 
+        ]
       }
 
     ];
@@ -671,35 +740,79 @@
       form.style.display = form.style.display === 'block' ? 'none' : 'block';
     }
 
-    function submitOrder(){
-      const name = document.getElementById('userName').value.trim();
-      const phone = document.getElementById('userPhone').value.trim();
-      const gov = document.getElementById('userGov').value.trim();
-      const address = document.getElementById('userAddress').value.trim();
-      if (!cart.length) { showToast('السلة فاضية'); return; }
-      if (!name || !phone || !gov || !address) { showToast('كمّل بيانات الطلب الأول'); return; }
+function submitOrder(){
+  const name = document.getElementById('userName').value.trim();
+  const phone = document.getElementById('userPhone').value.trim();
+  const email = document.getElementById('userEmail')?.value.trim() || 'لا يوجد';
+  const gov = document.getElementById('userGov').value.trim();
+  const address = document.getElementById('userAddress').value.trim();
 
-      const params = {
-        u_name: name,
-        u_phone: phone,
-        u_address: `${gov} - ${address}`,
-        u_order: cart.map(i => `${i.name} (${i.qty})`).join(' , '),
-        u_total: cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString() + ' EGP'
-      };
+  if (!cart.length) { showToast('السلة فاضية'); return; }
+  if (!name || !phone || !gov || !address) { showToast('كمّل البيانات'); return; }
 
-      if (typeof emailjs !== 'undefined') {
-        emailjs.send('service_wrb4twl', 'template_1o7unml', params)
-          .then(() => {
-            showToast('تم إرسال الطلب بنجاح');
-            cart = [];
-            saveCart();
-            closeModals();
-          })
-          .catch(() => showToast('تعذر إرسال الطلب الآن'));
-      } else {
-        showToast('خدمة الإرسال غير متاحة حاليًا');
-      }
-    }
+  const orderId = "ORD-" + Date.now();
+
+  const orderText = cart.map(i => `- ${i.name} (${i.qty})`).join('\n');
+  const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+
+  // 📧 EmailJS
+  const params = {
+    order_id: orderId,
+    u_name: name,
+    u_email: email,
+    u_phone: phone,
+    u_address: `${gov} - ${address}`,
+    u_order: orderText,
+    u_total: total.toLocaleString() + ' EGP',
+    date: new Date().toLocaleString()
+  };
+
+  if (typeof emailjs !== 'undefined') {
+    emailjs.send('service_wrb4twl', 'template_1o7unml', params)
+      .then(() => showToast('✅ تم إرسال الطلب على الإيميل'))
+      .catch(() => showToast('❌ فشل إرسال الإيميل'));
+  }
+
+  // 📱 واتساب
+  const whatsappMessage = 
+`🧾 اوردر رقم: ${orderId}
+
+👤 الاسم: ${name}
+📧 الايميل: ${email}
+📞 الرقم: ${phone}
+📍 العنوان: ${gov} - ${address}
+
+🛒 الطلب:
+${orderText}
+
+💰 الإجمالي: ${total.toLocaleString()} جنيه
+
+📅 التاريخ: ${new Date().toLocaleString()}`;
+
+  const whatsappURL = "https://wa.me/201113229079?text=" + encodeURIComponent(whatsappMessage);
+  window.open(whatsappURL, '_blank');
+
+  // 💾 حفظ الاوردر
+  let orders = JSON.parse(localStorage.getItem('orders_history') || '[]');
+  orders.push({
+    id: orderId,
+    name,
+    phone,
+    email,
+    address: `${gov} - ${address}`,
+    order: cart,
+    total,
+    date: new Date().toLocaleString()
+  });
+  localStorage.setItem('orders_history', JSON.stringify(orders));
+
+  // تنظيف
+  cart = [];
+  saveCart();
+  closeModals();
+
+  showToast('✅ تم تسجيل الطلب بنجاح');
+}
 
     function showToast(text){
       const wrap = document.getElementById('toastWrap');
